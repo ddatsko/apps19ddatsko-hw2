@@ -74,7 +74,7 @@ public class ImmutableLinkedList implements ImmutableList {
 
     // Find the Node by given index
     private Node getNode(int index) {
-        if (index < 0 || index >= size) {
+        if (index < 0 || index > size || size == 0) {
             throw new IndexOutOfBoundsException();
         }
         int counter;
