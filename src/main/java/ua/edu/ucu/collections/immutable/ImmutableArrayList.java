@@ -1,5 +1,7 @@
 package ua.edu.ucu.collections.immutable;
 
+import java.util.Arrays;
+
 public class ImmutableArrayList implements ImmutableList {
     private Object[] elements;
 
@@ -97,5 +99,11 @@ public class ImmutableArrayList implements ImmutableList {
     @Override
     public Object[] toArray() {
         return elements.clone();
+    }
+
+    @Override
+    public String toString() {
+        String str = Arrays.toString(toArray());
+        return str.substring(1, str.length() - 1);
     }
 }
