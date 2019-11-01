@@ -164,8 +164,29 @@ public class ImmutableLinkedListTest {
         Object[] expected = new Object[]{1, 1, 2, 3};
         assertArrayEquals(actual.toArray(), expected);
         assertArrayEquals(smallList.toArray(), new Object[]{1, 2, 3});
-        assertEquals(smallList.getSize(), 3);
-        assertEquals(actual.getSize(), 4);
+        assertEquals(smallList.size(), 3);
+        assertEquals(actual.size(), 4);
+    }
+
+    @Test
+    public void testListAddFirstEmpty() {
+        ImmutableLinkedList actual = emptyList.addFirst(1);
+        Object[] expected = new Object[]{1};
+        assertArrayEquals(actual.toArray(), expected);
+        assertEquals(actual.size(), 1);
+    }
+
+    @Test
+    public void testListAddLastEmpty() {
+        ImmutableLinkedList actual = emptyList.addLast(1);
+        Object[] expected = new Object[]{1};
+        assertArrayEquals(actual.toArray(), expected);
+        assertEquals(actual.size(), 1);
+    }
+
+    @Test(expected = IndexOutOfBoundsException.class)
+    public void testListGetFirstEmpty() {
+        emptyList.getFirst();
     }
 
     @Test
@@ -174,8 +195,8 @@ public class ImmutableLinkedListTest {
         Object[] expected = new Object[]{1, 2, 3, 1};
         assertArrayEquals(actual.toArray(), expected);
         assertArrayEquals(smallList.toArray(), new Object[]{1, 2, 3});
-        assertEquals(smallList.getSize(), 3);
-        assertEquals(actual.getSize(), 4);
+        assertEquals(smallList.size(), 3);
+        assertEquals(actual.size(), 4);
     }
 
     @Test
@@ -183,8 +204,8 @@ public class ImmutableLinkedListTest {
         ImmutableLinkedList actual = largeList.removeFirst();
         assertArrayEquals(actual.toArray(), new Object[]{2, 3, 4, 5, 6, 7, 8});
         assertArrayEquals(largeList.toArray(), new Object[]{1, 2, 3, 4, 5, 6, 7, 8});
-        assertEquals(largeList.getSize(), 8);
-        assertEquals(actual.getSize(), 7);
+        assertEquals(largeList.size(), 8);
+        assertEquals(actual.size(), 7);
     }
 
     @Test
@@ -192,8 +213,8 @@ public class ImmutableLinkedListTest {
         ImmutableLinkedList actual = largeList.removeLast();
         assertArrayEquals(actual.toArray(), new Object[]{1, 2, 3, 4, 5, 6, 7});
         assertArrayEquals(largeList.toArray(), new Object[]{1, 2, 3, 4, 5, 6, 7, 8});
-        assertEquals(largeList.getSize(), 8);
-        assertEquals(actual.getSize(), 7);
+        assertEquals(largeList.size(), 8);
+        assertEquals(actual.size(), 7);
     }
 
 

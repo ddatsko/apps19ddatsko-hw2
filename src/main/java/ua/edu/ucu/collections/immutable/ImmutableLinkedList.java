@@ -4,10 +4,6 @@ public class ImmutableLinkedList implements ImmutableList {
     private int size;
     private Node head;
 
-    public int getSize() {
-        return size;
-    }
-
     private static class Node {
         private Object value;
         private Node next;
@@ -23,11 +19,6 @@ public class ImmutableLinkedList implements ImmutableList {
         }
     }
 
-    public ImmutableLinkedList() {
-        head = null;
-        size = 0;
-    }
-
     public ImmutableLinkedList(Object[] source) {
         if (source.length != 0) {
             head = new Node(source[0]);
@@ -39,7 +30,11 @@ public class ImmutableLinkedList implements ImmutableList {
             }
         }
         size = source.length;
+    }
 
+    public ImmutableLinkedList() {
+        head = null;
+        size = 0;
     }
 
     private ImmutableLinkedList copyOf() {
@@ -79,7 +74,7 @@ public class ImmutableLinkedList implements ImmutableList {
 
     // Find the Node by given index
     private Node getNode(int index) {
-        if (index < 0 || index > size) {
+        if (index < 0 || index >= size) {
             throw new IndexOutOfBoundsException();
         }
         int counter;
@@ -99,7 +94,7 @@ public class ImmutableLinkedList implements ImmutableList {
     public ImmutableLinkedList addAll(int index, Object[] c) {
         ImmutableLinkedList newList = copyOf();
 
-        // Add A head Node to avoid some problems with adding elements to the head
+        // Add A Node to avoid some problems with adding elements to the head
         newList.head = new Node(null, newList.head);
         if (c.length > 0) {
             Node currentAdding = newList.getNode(index);
