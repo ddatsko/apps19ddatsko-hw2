@@ -26,6 +26,7 @@ public class ImmutableLinkedListTest {
     public void testListAdd() {
         ImmutableList actual = smallList.add(1);
         Object[] expected = new Object[]{1, 2, 3, 1};
+        System.out.println(Arrays.toString(smallList.toArray()));
         assertArrayEquals(actual.toArray(), expected);
         assertArrayEquals(smallList.toArray(), new Object[]{1, 2, 3});
     }
@@ -46,7 +47,7 @@ public class ImmutableLinkedListTest {
     @Test
     public void testListAddAll() {
         ImmutableList actual = smallList.addAll(sampleList);
-//        System.out.println(Arrays.toString);
+        System.out.println(Arrays.toString(actual.toArray()));
         Object[] expected = new Object[]{1, 2, 3, 10, 11, 12};
         assertArrayEquals(actual.toArray(), expected);
         assertArrayEquals(smallList.toArray(), new Object[]{1, 2, 3});
@@ -116,7 +117,10 @@ public class ImmutableLinkedListTest {
 
     @Test
     public void testListSize() {
-        assertEquals(largeList.size(), 8);
+        ImmutableLinkedList testList = largeList.remove(4);
+        testList = testList.addAll(new Object[]{1, 2, 3, 4});
+        testList = testList.removeLast();
+        assertEquals(testList.size(), 10);
         assertArrayEquals(largeList.toArray(), new Object[]{1, 2, 3, 4, 5, 6, 7, 8});
     }
 
@@ -215,7 +219,9 @@ public class ImmutableLinkedListTest {
         assertArrayEquals(largeList.toArray(), new Object[]{1, 2, 3, 4, 5, 6, 7, 8});
         assertEquals(largeList.size(), 8);
         assertEquals(actual.size(), 7);
+        assertEquals(actual.getLast(), 7);
     }
+
 
 
     @Test
@@ -229,9 +235,26 @@ public class ImmutableLinkedListTest {
         assertEquals(largeList.getLast(), 8);
         assertArrayEquals(largeList.toArray(), new Object[]{1, 2, 3, 4, 5, 6, 7, 8});
     }
+
     @Test(expected = IndexOutOfBoundsException.class)
     public void testListGetLastError() {
         emptyList.getLast();
     }
+
+    @Test(expected = IndexOutOfBoundsException.class)
+    public void testListRemoveLastError() {
+        emptyList.removeLast();
+    }
+
+    @Test(expected = IndexOutOfBoundsException.class)
+    public void testListGetFirstError() {
+        emptyList.getFirst();
+    }
+
+    @Test(expected = IndexOutOfBoundsException.class)
+    public void testListRemoveFirstError() {
+        emptyList.removeFirst();
+    }
+
 
 }
