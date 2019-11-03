@@ -111,11 +111,11 @@ public class ImmutableLinkedList implements ImmutableList {
 
     @Override
     public ImmutableLinkedList addAll(int index, Object[] c) {
-        if (size == 0) {
+        if (size == 0 && index == 0) {
             return new ImmutableLinkedList(c);
         }
         if (c.length == 0) {
-            return new ImmutableLinkedList();
+            return copy();
         }
         ImmutableLinkedList newList = copy().add(index, c[0]);
         Node currentNode = newList.getNode(index);

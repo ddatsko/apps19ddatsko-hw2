@@ -18,7 +18,7 @@ public class ImmutableLinkedListTest {
     @Before
     public void setUp() throws Exception {
         smallList = new ImmutableLinkedList(new Object[]{1, 2, 3});
-        emptyList = new ImmutableLinkedList();
+        emptyList = new ImmutableLinkedList(new Object[0]);
         largeList = new ImmutableLinkedList(new Object[]{1, 2, 3, 4, 5, 6, 7, 8});
     }
 
@@ -61,6 +61,21 @@ public class ImmutableLinkedListTest {
         assertArrayEquals(smallList.toArray(), new Object[]{1, 2, 3});
     }
 
+    @Test
+    public void testListAddAllEmpty() {
+        ImmutableList actual = emptyList.addAll(sampleList);
+        Object[] expected = new Object[]{10, 11, 12};
+        assertArrayEquals(actual.toArray(), expected);
+    }
+
+    @Test
+    public void testListAddAllEmptyArray() {
+        ImmutableList actual = smallList.addAll(new Object[]{});
+        Object[] expected = new Object[]{1, 2, 3};
+        assertArrayEquals(actual.toArray(), expected);
+    }
+
+
     @Test(expected = IndexOutOfBoundsException.class)
     public void testListAddAllIndexOutOfRange() {
         ImmutableList actual = smallList.addAll(10, sampleList);
@@ -94,6 +109,18 @@ public class ImmutableLinkedListTest {
         ImmutableList actual = largeList.set(2, 10);
         assertArrayEquals(actual.toArray(), new Object[]{1, 2, 10, 4, 5, 6, 7, 8});
         assertArrayEquals(largeList.toArray(), new Object[]{1, 2, 3, 4, 5, 6, 7, 8});
+    }
+
+    @Test
+    public void testListSetHead() {
+        ImmutableList actual = largeList.set(0, 10);
+        assertArrayEquals(actual.toArray(), new Object[]{10, 2, 3, 4, 5, 6, 7, 8});
+        assertArrayEquals(largeList.toArray(), new Object[]{1, 2, 3, 4, 5, 6, 7, 8});
+    }
+
+    @Test(expected = IndexOutOfBoundsException.class)
+    public void testEmptyListSet() {
+        emptyList.set(1, 1);
     }
 
     @Test(expected = IndexOutOfBoundsException.class)
@@ -221,7 +248,6 @@ public class ImmutableLinkedListTest {
         assertEquals(actual.size(), 7);
         assertEquals(actual.getLast(), 7);
     }
-
 
 
     @Test

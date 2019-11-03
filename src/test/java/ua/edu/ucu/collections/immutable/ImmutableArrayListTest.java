@@ -41,6 +41,12 @@ public class ImmutableArrayListTest {
         ImmutableList actual = smallList.add(10, 5);
     }
 
+    @Test(expected = IndexOutOfBoundsException.class)
+    public void testListAddNegativeIndex() {
+        ImmutableList actual = smallList.add(-5, 5);
+    }
+
+
     @Test
     public void testListAddAll() {
         ImmutableList actual = smallList.addAll(sampleList);
@@ -61,6 +67,12 @@ public class ImmutableArrayListTest {
     public void testListAddAllIndexOutOfRange() {
         ImmutableList actual = smallList.addAll(10, sampleList);
     }
+
+    @Test(expected = IndexOutOfBoundsException.class)
+    public void testListAddAllNegativeIndex() {
+        ImmutableList actual = smallList.addAll(-5, new Object[]{1, 2});
+    }
+
 
     @Test
     public void testListGet() {
@@ -83,6 +95,11 @@ public class ImmutableArrayListTest {
     @Test(expected = IndexOutOfBoundsException.class)
     public void testListRemoveError() {
         ImmutableList actual = largeList.remove(-1);
+    }
+
+    @Test(expected = IndexOutOfBoundsException.class)
+    public void testListRemoveNegativeIndex() {
+        ImmutableList actual = smallList.remove(-5);
     }
 
     @Test
