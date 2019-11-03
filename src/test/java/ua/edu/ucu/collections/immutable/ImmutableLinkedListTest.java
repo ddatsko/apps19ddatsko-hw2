@@ -78,7 +78,7 @@ public class ImmutableLinkedListTest {
 
     @Test(expected = IndexOutOfBoundsException.class)
     public void testListAddAllIndexOutOfRange() {
-        ImmutableList actual = smallList.addAll(10, sampleList);
+        smallList.addAll(10, sampleList);
     }
 
     @Test
@@ -100,9 +100,15 @@ public class ImmutableLinkedListTest {
     }
 
     @Test(expected = IndexOutOfBoundsException.class)
-    public void testListRemoveError() {
-        ImmutableList actual = largeList.remove(-1);
+    public void testListRemoveSmallIndex() {
+        largeList.remove(-1);
     }
+
+    @Test(expected = IndexOutOfBoundsException.class)
+    public void testListRemoveLargeIndex() {
+        largeList.remove(100);
+    }
+
 
     @Test
     public void testListSet() {
