@@ -3,7 +3,7 @@ package ua.edu.ucu.collections.immutable;
 import java.util.HashMap;
 import java.util.Map;
 
-public class ImmutableLinkedList implements ImmutableList {
+public final class ImmutableLinkedList implements ImmutableList {
     private Map<Node, Node> links;
     private Node head;
     private Node tail;
@@ -189,7 +189,7 @@ public class ImmutableLinkedList implements ImmutableList {
         int counter = 0;
         Node currentNode = head;
         while (currentNode != null) {
-            if (currentNode.value == e) {
+            if (currentNode.value.equals(e)) {
                 return counter;
             }
             counter++;
