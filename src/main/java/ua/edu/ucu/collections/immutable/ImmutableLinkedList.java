@@ -1,5 +1,6 @@
 package ua.edu.ucu.collections.immutable;
 
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -11,7 +12,6 @@ public final class ImmutableLinkedList implements ImmutableList {
 
     private static class Node {
         private Object value;
-
         private Node(Object value) {
             this.value = value;
         }
@@ -81,27 +81,7 @@ public final class ImmutableLinkedList implements ImmutableList {
 
     @Override
     public ImmutableLinkedList add(int index, Object e) {
-        ImmutableLinkedList newList = copy();
-        newList.size++;
-        Node tmpNode = new Node(e);
-        if (index == size && tail != null) {
-            newList.links.put(newList.tail, tmpNode);
-            newList.tail = tmpNode;
-            return newList;
-        }
-        if (index == 0) {
-            newList.links.put(tmpNode, newList.head);
-            newList.head = tmpNode;
-        } else {
-            Node prev = newList.getNode(index - 1);
-            newList.appendToNode(prev, tmpNode);
-        }
-        if (size == index) {
-            newList.tail = tmpNode;
-        }
-        return newList;
-
-
+        return addAll(index, new Object[]{e});
     }
 
     @Override
@@ -111,13 +91,33 @@ public final class ImmutableLinkedList implements ImmutableList {
 
     @Override
     public ImmutableLinkedList addAll(int index, Object[] c) {
-        if (size == 0 && index == 0) {
+        if (size == 0 && index == 0) {  // if the LinkedList is empty
             return new ImmutableLinkedList(c);
         }
-        if (c.length == 0) {
+        if (c.length == 0) {  // if there is no items to add
             return copy();
         }
-        ImmutableLinkedList newList = copy().add(index, c[0]);
+        ImmutableLinkedList newList = copy();
+        Node tmp = new Node(c[0]);
+
+        // add the first node
+
+        // if adding to the head
+        if (index == 0) {
+            newList.links.put(tmp, newList.head);
+            newList.head = tmp;
+        }
+        else {
+            Node prev = newList.getNode(index - 1);
+            newList.links.put(tmp, newList.links.get(prev));
+            newList.links.put(prev, tmp);
+            if (index == newList.size) {
+                newList.tail = tmp;
+            }
+        }
+        newList.size++;
+
+        // add all other nodes (adding them to the previous one)
         Node currentNode = newList.getNode(index);
 
         for (int i = 1; i < c.length; i++) {
@@ -125,11 +125,10 @@ public final class ImmutableLinkedList implements ImmutableList {
             currentNode = newList.links.get(currentNode);
         }
         if (index == size) {
-            newList.tail = currentNode;
+            newList.tail = currentNode;  // update the tail if needed
         }
 
-        // -1 as one element was added before
-        newList.size += c.length - 1;
+        newList.size += c.length - 1;  // -1 as one element was added before
         return newList;
     }
 
@@ -215,17 +214,7 @@ public final class ImmutableLinkedList implements ImmutableList {
 
     @Override
     public String toString() {
-        if (head == null) {
-            return "";
-        }
-        StringBuilder res = new StringBuilder(head.value.toString());
-        Node currentNode = head;
-        while (links.get(currentNode) != null) {
-            currentNode = links.get(currentNode);
-            res.append(", ").append(currentNode.value.toString());
-
-        }
-        return res.toString();
+        return Arrays.toString(toArray());
     }
 
     @Override

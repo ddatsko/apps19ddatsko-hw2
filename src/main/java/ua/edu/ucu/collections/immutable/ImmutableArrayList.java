@@ -21,15 +21,7 @@ public final class ImmutableArrayList implements ImmutableList {
 
     @Override
     public ImmutableArrayList add(int index, Object e) {
-        if (index < 0 || index > elements.length) {
-            throw new IndexOutOfBoundsException();
-        }
-        Object[] newArr = new Object[elements.length + 1];
-        System.arraycopy(elements, 0, newArr, 0, index);
-        System.arraycopy(elements, index, newArr, index + 1,
-                elements.length - index);
-        newArr[index] = e;
-        return new ImmutableArrayList(newArr);
+        return addAll(index, new Object[]{e});
     }
 
     @Override
